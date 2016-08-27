@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ShipMovement : MonoBehaviour 
+public class Ship : MonoBehaviour 
 {
     public float Speed;
+    public float Life;
 	// Use this for initialization
 	void Start () 
     {

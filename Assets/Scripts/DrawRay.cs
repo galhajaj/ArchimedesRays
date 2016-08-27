@@ -3,20 +3,21 @@ using System.Collections;
 
 public class DrawRay : MonoBehaviour 
 {
-    public Vector3 RayPoint;
+    public GameObject RayPoint;
 
     readonly Color RAY_COLOR = new Color(1.0F, 1.0F, 0.0F, 0.1F);
 	// Use this for initialization
 	void Start () 
     {
-        RayPoint = new Vector2(Random.Range(-8.0F, 6.0F), Random.Range(5.0F, -3.0F));
+        RayPoint = Instantiate(RayPoint, new Vector3(Random.Range(-8.0F, 6.0F), Random.Range(5.0F, -3.0F)), Quaternion.identity) as GameObject;
+        //RayPoint = new Vector2(Random.Range(-8.0F, 6.0F), Random.Range(5.0F, -3.0F));
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
         lookTowardsRayPoint();
-        DrawLine(transform.position, RayPoint, RAY_COLOR, 0.4F, 0.01F, Time.deltaTime);
+        DrawLine(transform.position, RayPoint.transform.position, RAY_COLOR, 0.4F, 0.01F, /*Time.unscaledDeltaTime*//*Time.smoothDeltaTime*/ Time.deltaTime);
 	}
 
     void DrawLine(Vector3 start, Vector3 end, Color color, float widthBegin, float widthEnd, float duration = 0.2f)
@@ -36,7 +37,7 @@ public class DrawRay : MonoBehaviour
 
     private void lookTowardsRayPoint()
     {
-        Vector3 diff = RayPoint - transform.position;
+        Vector3 diff = RayPoint.transform.position - transform.position;
         diff.Normalize();
         float rotZ = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0.0F, 0.0F, rotZ - 90.0F);
